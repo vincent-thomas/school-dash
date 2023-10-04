@@ -1,0 +1,258 @@
+[
+  {
+    "guidId": "ODk0MTNiZTUtZDk4NS1mZTk5LTkwMDctNTFiYWZmMGYwNDI1",
+    "texts": ["Lunch", "", ""],
+    "timeStart": "11:35:00",
+    "timeEnd": "12:00:00",
+    "dayOfWeekNumber": 1,
+    "blockName": ""
+  },
+  {
+    "guidId": "YjBjYTRlNjAtMDBlNS1mNjdmLTljOTYtODhlNjk3OTUzOTY3",
+    "texts": ["Programmering 1", "JW", "316"],
+    "timeStart": "12:25:00",
+    "timeEnd": "14:35:00",
+    "dayOfWeekNumber": 1,
+    "blockName": ""
+  },
+  {
+    "guidId": "NzNmMDFmZDMtMzE3OS1mMDliLWI4NGEtOGJkNzk5ZTE3NTcw",
+    "texts": ["Fysik 1", "JW", "318"],
+    "timeStart": "10:00:00",
+    "timeEnd": "11:20:00",
+    "dayOfWeekNumber": 1,
+    "blockName": ""
+  },
+  {
+    "guidId": "YTMxZDNmNzQtY2ZjOC1mOGUzLWExNzYtOGNlYzFmODA5MTEz",
+    "texts": ["Mattestuga", "", "215"],
+    "timeStart": "15:00:00",
+    "timeEnd": "17:00:00",
+    "dayOfWeekNumber": 1,
+    "blockName": ""
+  },
+  {
+    "guidId": "MGUzYWI5NmItZTJlNi1mNzZjLThiODUtMjJkZjA4NGUxZDlj",
+    "texts": ["Fysik 1  b)", "JW", "318"],
+    "timeStart": "08:50:00",
+    "timeEnd": "10:00:00",
+    "dayOfWeekNumber": 2,
+    "blockName": "1/2"
+  },
+  {
+    "guidId": "Y2U5Nzg2NGItMjhhYy1mYjVlLWE2NzktNzY0ZWVmODhjZjZm",
+    "texts": ["Biologi 1", "SK", "406"],
+    "timeStart": "14:25:00",
+    "timeEnd": "15:35:00",
+    "dayOfWeekNumber": 2,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZjhlYjM4OTQtYmI5NC1mMDVhLTg4NGMtMGRjOTY5Y2FmZGMx",
+    "texts": ["Kemi 2", "LIS", "406"],
+    "timeStart": "15:45:00",
+    "timeEnd": "16:55:00",
+    "dayOfWeekNumber": 2,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZTNlOTNjODQtMzAwYS1mMjc3LWE2MTItNDc0MDViZDdiYTY0",
+    "texts": ["Webbutveckling 1", "EWI", "316"],
+    "timeStart": "12:05:00",
+    "timeEnd": "14:15:00",
+    "dayOfWeekNumber": 2,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZmE0MzdhODktZjg5Yi1mYTk4LTk3NGItNjQ5ZDZkNzY0YWVk",
+    "texts": ["Lunch", "", ""],
+    "timeStart": "11:25:00",
+    "timeEnd": "11:50:00",
+    "dayOfWeekNumber": 2,
+    "blockName": ""
+  },
+  {
+    "guidId": "NTJjNTdhOTgtMDkyMC1mMDc5LWIyOTYtMTQ0NGU0NGRlMmJi",
+    "texts": ["Matematik 3c", "SK", "306"],
+    "timeStart": "10:15:00",
+    "timeEnd": "11:15:00",
+    "dayOfWeekNumber": 2,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZDMzZjIxZDYtODY4ZC1mMjcxLWEzMjQtN2Q5MGUxNWEzZjAz",
+    "texts": ["Fysik 1  a)", "JW", "318"],
+    "timeStart": "08:50:00",
+    "timeEnd": "10:00:00",
+    "dayOfWeekNumber": 2,
+    "blockName": "1/2"
+  },
+  {
+    "guidId": "ZGM0Mjc1Y2EtNzg2OS1mZjJmLTk0MDQtNTYzOTkxMDVmYzBj",
+    "texts": ["Fotografisk bild 1", "IP", "K2"],
+    "timeStart": "14:50:00",
+    "timeEnd": "16:50:00",
+    "dayOfWeekNumber": 2,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZWFjNGVmZWItYmViZi1mNDZhLThhOWMtNThkNmRlNzc5MjBm",
+    "texts": ["Fysik 1", "JW", "316"],
+    "timeStart": "08:20:00",
+    "timeEnd": "09:35:00",
+    "dayOfWeekNumber": 3,
+    "blockName": ""
+  },
+  {
+    "guidId": "MzU1ZmM5ZDYtNjUwYy1mNTYxLWJmNmItNmFhYzYyMTk2M2Mx",
+    "texts": ["Moderna språk spanska 4", "RG", "306"],
+    "timeStart": "15:20:00",
+    "timeEnd": "16:30:00",
+    "dayOfWeekNumber": 3,
+    "blockName": ""
+  },
+  {
+    "guidId": "MWRiN2VkMTMtMWQ1ZC1mNWJkLTg1YzUtNTk4NzViZTY4ZTI1",
+    "texts": ["Svenska 2", "JT", "215"],
+    "timeStart": "13:55:00",
+    "timeEnd": "15:05:00",
+    "dayOfWeekNumber": 3,
+    "blockName": ""
+  },
+  {
+    "guidId": "YjNhNGQ2NzMtYWVlZS1mYTk1LTg3ZjgtZTZiMDQ3ZjhmYzMz",
+    "texts": ["Lunch", "", ""],
+    "timeStart": "11:40:00",
+    "timeEnd": "12:05:00",
+    "dayOfWeekNumber": 3,
+    "blockName": ""
+  },
+  {
+    "guidId": "MjA0YjZiZTctYTY2YS1mMTE4LWI0ZjEtY2M0MTkyNDQ5Yzhh",
+    "texts": ["Engelska 6", "MAA", "215"],
+    "timeStart": "12:35:00",
+    "timeEnd": "13:45:00",
+    "dayOfWeekNumber": 3,
+    "blockName": ""
+  },
+  {
+    "guidId": "MDNmODJiYzktYWYzMi1mZjVhLTkyNTAtZjJkMmQ0YzFkOTJj",
+    "texts": ["Matematik 3c", "SK", "204"],
+    "timeStart": "09:45:00",
+    "timeEnd": "11:15:00",
+    "dayOfWeekNumber": 3,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZjcwYzY5YWMtMDZjYy1mMGVmLWEzNzAtN2MwODFhYzJiNDJh",
+    "texts": ["Svenska som andraspråk 2", "UA", "215"],
+    "timeStart": "15:20:00",
+    "timeEnd": "16:30:00",
+    "dayOfWeekNumber": 3,
+    "blockName": ""
+  },
+  {
+    "guidId": "YzdmNjYzMjItNzdiOS1mZTljLWIzZGYtNTNhZmUzYmE2Nzg2",
+    "texts": ["Fotboll", "Fysiken"],
+    "timeStart": "16:00:00",
+    "timeEnd": "17:00:00",
+    "dayOfWeekNumber": 4,
+    "blockName": ""
+  },
+  {
+    "guidId": "MDkwZWQ1ODQtNDFlNC1mMGNlLWE2NDctYTYwYWU4NjdkYTEw",
+    "texts": ["Biologi 1", "SK", "Kemilabb"],
+    "timeStart": "15:25:00",
+    "timeEnd": "16:55:00",
+    "dayOfWeekNumber": 4,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZDljMDg3NTMtODI5YS1mODlhLThiZWUtNGU3ZWZhMDk5OTk1",
+    "texts": ["Lunch", "", ""],
+    "timeStart": "12:30:00",
+    "timeEnd": "12:55:00",
+    "dayOfWeekNumber": 4,
+    "blockName": ""
+  },
+  {
+    "guidId": "NWVmYTFjMzMtMmM5NS1mYzI3LWJiMWYtYTc2NDhjOWQxMWFh",
+    "texts": ["Tillämpad programmering", "VH", "215"],
+    "timeStart": "13:15:00",
+    "timeEnd": "15:25:00",
+    "dayOfWeekNumber": 4,
+    "blockName": ""
+  },
+  {
+    "guidId": "OTgyMTAyMTQtYjUwMy1mMDdjLThhYTMtNGFkMjk0NTNiMWIz",
+    "texts": ["Matematik 3c", "SK", "426"],
+    "timeStart": "09:15:00",
+    "timeEnd": "10:15:00",
+    "dayOfWeekNumber": 4,
+    "blockName": ""
+  },
+  {
+    "guidId": "YTA5NmVhYjktYjJjMi1mOWMyLWE3OTctMDUyZjRmOWIxMDM1",
+    "texts": ["Kemi 2", "LIS", "Kemilabb"],
+    "timeStart": "13:40:00",
+    "timeEnd": "15:10:00",
+    "dayOfWeekNumber": 4,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZjdlM2JhNDgtN2QwYS1mYmI4LTg4NTgtNzczMmNiMDJiNjRl",
+    "texts": ["Idrott", "SA", "Fysiken"],
+    "timeStart": "11:00:00",
+    "timeEnd": "12:00:00",
+    "dayOfWeekNumber": 4,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZmE4ODdiZTEtOTU2Ni1mMTM0LTk2YTUtMmMyZjMwMzg0OGUx",
+    "texts": ["Engelska 6", "MAA", "215"],
+    "timeStart": "11:50:00",
+    "timeEnd": "13:00:00",
+    "dayOfWeekNumber": 5,
+    "blockName": ""
+  },
+  {
+    "guidId": "NzI3NmViYmEtYzFhZS1mZWNkLTgyYTgtZDliYjE5MWZjZTJh",
+    "texts": ["Svenska som andraspråk 2", "UA", "215"],
+    "timeStart": "08:15:00",
+    "timeEnd": "09:25:00",
+    "dayOfWeekNumber": 5,
+    "blockName": ""
+  },
+  {
+    "guidId": "ODFhOGRkNzAtZDA5Yy1mNmM4LWE4ZWEtOTA4NzllZjA2M2Nm",
+    "texts": ["Mentorstid", "KN,JL", "215"],
+    "timeStart": "13:10:00",
+    "timeEnd": "13:55:00",
+    "dayOfWeekNumber": 5,
+    "blockName": ""
+  },
+  {
+    "guidId": "OWEzNDg0ZjEtOWVhMS1mZTRhLTg0MzQtYzk0NTg5NDM1OTk3",
+    "texts": ["Svenska 2", "JT", "410"],
+    "timeStart": "09:45:00",
+    "timeEnd": "10:55:00",
+    "dayOfWeekNumber": 5,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZDE5ODRhM2EtYzk1OS1mMmYwLTgwMTctYjU2MmVmNmY0NWFl",
+    "texts": ["Moderna språk spanska 4", "RG", "306"],
+    "timeStart": "08:15:00",
+    "timeEnd": "09:25:00",
+    "dayOfWeekNumber": 5,
+    "blockName": ""
+  },
+  {
+    "guidId": "ZmQwODZjNWEtMDlkNC1mMTYyLTk3YmQtY2JiOTIwNjM2OWZk",
+    "texts": ["Lunch", "", ""],
+    "timeStart": "11:10:00",
+    "timeEnd": "11:35:00",
+    "dayOfWeekNumber": 5,
+    "blockName": ""
+  }
+]
