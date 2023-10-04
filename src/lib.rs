@@ -1,6 +1,5 @@
 #![allow(non_snake_case)]
 
-// bram, har du en iter för varje dag haha
 use std::fmt;
 use std::collections::HashMap;
 
@@ -8,32 +7,9 @@ use reqwest::Client;
 use serde::{Serialize, Deserialize};
 
 
-/*#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
-}
+const SKOLA24_KEY: &str = "8a22163c-8662-4535-9050-bc5e1923df48";
+const SKOLA24_BASE_URL: &str = "https://web.skola24.se/api";
 
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
-
-async fn manual_hello() -> impl Responder {
-    HttpResponse::Ok().body("Hey there!")
-}
-
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .service(hello)
-            .service(echo)
-            .route("/hey", web::get().to(manual_hello))
-    })
-    .bind(("127.0.0.1", 8080))?
-    .run()
-    .await
-}*/
 
 #[derive(Serialize, Deserialize, Debug)]
 struct KeyData {
@@ -68,11 +44,8 @@ impl fmt::Display for LessonInfo {
 impl fmt::Display for Lessons {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut string = "[".to_string();
-
         self.lessons.iter().for_each(|f| string.push_str(format!("{},", f).as_str()));
-
         string.push_str("]");
-
         write!(f, "{}", string)
     }
 }
@@ -101,8 +74,8 @@ enum JsonValue {
 pub async fn get_key() -> String {
     let client: Client = Client::new();
     let res = client
-        .get("https://web.skola24.se/api/get/timetable/render/key")
-        .header("X-Scope", "8a22163c-8662-4535-9050-bc5e1923df48")
+        .get(SKOLA24_BASE_URL.to_string() + "/get/timetable/render/key")
+        .header("X-Scope", SKOLA24_KEY)
         .send().await;
 
     let body = res.unwrap().text().await.unwrap();
@@ -126,8 +99,8 @@ pub async fn get_lesson_info(client: Client, key: String) -> Lessons {
     body_to_send.insert("year", JsonValue::Nummer(2023));
 
     let res = client
-        .post("https://web.skola24.se/api/render/timetable")
-        .header("X-Scope", "8a22163c-8662-4535-9050-bc5e1923df48")
+        .post(SKOLA24_BASE_URL.to_string() + "/render/timetable")
+        .header("X-Scope", SKOLA24_KEY)
         .header("Content-Type", "application/json")
         .body(serde_json::to_string(&body_to_send).unwrap())
         .send()
