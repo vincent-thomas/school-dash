@@ -209,6 +209,8 @@ type Value = Vec<Lesson>;
 
 impl LessonMap<Value> for HashMap<Day, Value> {
     fn get_day(&self, day: Day) -> Value {
-        self.get(&day).unwrap().clone()
+        self.get(&day)
+            .expect("Alla dagar finns inte i lesson_map")
+            .clone()
     }
 }
