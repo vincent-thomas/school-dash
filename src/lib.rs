@@ -199,3 +199,16 @@ pub fn parse_lessons(lessons: Lessons) -> HashMap<Day, Vec<Lesson>> {
 
     mer_sorterad
 }
+
+// Fin abstraktion över Self.get(&day).unwrap().clone(). Behöver inte unwrap på grund av att det är garanterat att alla nycklar från måndag till söndag finns.
+pub trait LessonMap<T> {
+    fn get_day(&self, day: Day) -> T;
+}
+
+type Value = Vec<Lesson>;
+
+impl LessonMap<Value> for HashMap<Day, Value> {
+    fn get_day(&self, day: Day) -> Value {
+        self.get(&day).unwrap().clone()
+    }
+}
