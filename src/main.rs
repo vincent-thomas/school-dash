@@ -1,21 +1,28 @@
+use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 use reqwest::Client;
 use schooldash::{get_key, get_lesson_info, parse_lessons};
 
-use std::fs::File;
-use std::io::prelude::*;
+#[get("/")]
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body("Hello world!")
+}
 
-#[tokio::main]
-async fn main() -> std::io::Result<()> {
+#[get("/schema")]
+async fn echo() -> impl Responder {
     let key = get_key().await;
-
     let lesson_info = get_lesson_info(Client::new(), key).await;
 
     let lesson_info_as_string = parse_lessons(lesson_info);
-    let mut file = File::create("lesson_info.json")?;
 
     let lesson_info_as_string = serde_json::to_string(&lesson_info_as_string);
 
-    file.write_all(lesson_info_as_string.unwrap().as_bytes())?;
+    HttpResponse::Ok().body(lesson_info_as_string.unwrap())
+}
 
-    Ok(())
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| App::new().service(hello).service(echo))
+        .bind(("127.0.0.1", 8080))?
+        .run()
+        .await
 }

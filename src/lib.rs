@@ -45,7 +45,7 @@ impl fmt::Display for Lessons {
         self.lessons
             .iter()
             .for_each(|f| string.push_str(format!("{},", f).as_str()));
-        string.push_str("]");
+        string.push(']');
         write!(f, "{}", string)
     }
 }
