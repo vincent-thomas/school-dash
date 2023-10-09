@@ -6,9 +6,7 @@ use std::fmt;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
-const SKOLA24_KEY: &str = "8a22163c-8662-4535-9050-bc5e1923df48";
-const SKOLA24_BASE_URL: &str = "https://web.skola24.se/api";
-
+pub mod schools;
 #[derive(Serialize, Deserialize, Debug)]
 struct KeyData {
     key: String,
@@ -68,20 +66,21 @@ enum JsonValue {
     Nummer(i32),
 }
 
-pub async fn get_key() -> String {
-    let client: Client = Client::new();
-    let res = client
-        .get(SKOLA24_BASE_URL.to_string() + "/get/timetable/render/key")
-        .header("X-Scope", SKOLA24_KEY)
-        .send()
-        .await;
+// pub async fn get_key() -> String {
+//     todo!()
+// let client: Client = Client::new();
+// let res = client
+//     .get(SKOLA24_BASE_URL.to_string() + "/get/timetable/render/key")
+//     .header("X-Scope", SKOLA24_KEY)
+//     .send()
+//     .await;
 
-    let body = res.unwrap().text().await.unwrap();
+// let body = res.unwrap().text().await.unwrap();
 
-    let body_parsed: KeyResponse = serde_json::from_str(body.as_str()).expect("Har ingen key");
+// let body_parsed: KeyResponse = serde_json::from_str(body.as_str()).expect("Har ingen key");
 
-    body_parsed.data.key
-}
+// body_parsed.data.key
+// }
 
 pub async fn get_lesson_info(client: Client, key: String) -> Lessons {
     let mut body_to_send = HashMap::new();
@@ -104,23 +103,23 @@ pub async fn get_lesson_info(client: Client, key: String) -> Lessons {
     );
     body_to_send.insert("week", JsonValue::Nummer(40));
     body_to_send.insert("year", JsonValue::Nummer(2023));
+    todo!();
+    // let res = client
+    //     .post(SKOLA24_BASE_URL.to_string() + "/render/timetable")
+    //     .header("X-Scope", SKOLA24_KEY)
+    //     .header("Content-Type", "application/json")
+    //     .body(serde_json::to_string(&body_to_send).unwrap())
+    //     .send()
+    //     .await;
 
-    let res = client
-        .post(SKOLA24_BASE_URL.to_string() + "/render/timetable")
-        .header("X-Scope", SKOLA24_KEY)
-        .header("Content-Type", "application/json")
-        .body(serde_json::to_string(&body_to_send).unwrap())
-        .send()
-        .await;
+    // let body = res.unwrap().text().await.unwrap();
 
-    let body = res.unwrap().text().await.unwrap();
+    // // Jag fixade sort lessons funktionen
+    // let body_parsed: TimeTableResponse = serde_json::from_str(body.as_str()).unwrap();
 
-    // Jag fixade sort lessons funktionen
-    let body_parsed: TimeTableResponse = serde_json::from_str(body.as_str()).unwrap();
-
-    Lessons {
-        lessons: body_parsed.data.lessonInfo.unwrap(),
-    }
+    // Lessons {
+    //     lessons: body_parsed.data.lessonInfo.unwrap(),
+    // }
 }
 
 #[derive(Serialize, Deserialize, Hash, Eq, PartialEq, Debug, Clone)]
