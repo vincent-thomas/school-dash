@@ -1,12 +1,18 @@
 #![allow(non_snake_case)]
 
+
 use std::collections::HashMap;
 use std::fmt;
 
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
+
 pub mod schools;
+pub mod utils;
+
+use schools::{Day, Lesson, ResponseLesson};
+
 #[derive(Serialize, Deserialize, Debug)]
 struct KeyData {
     key: String,
@@ -82,7 +88,7 @@ enum JsonValue {
 // body_parsed.data.key
 // }
 
-pub async fn get_lesson_info(client: Client, key: String) -> Lessons {
+pub async fn get_lesson_info(_client: Client, key: String) -> Lessons {
     let mut body_to_send = HashMap::new();
 
     body_to_send.insert("renderKey", JsonValue::Text(key));
@@ -122,40 +128,10 @@ pub async fn get_lesson_info(client: Client, key: String) -> Lessons {
     // }
 }
 
-#[derive(Serialize, Deserialize, Hash, Eq, PartialEq, Debug, Clone)]
-pub enum Day {
-    Måndag,
-    Tisdag,
-    Onsdag,
-    Torsdag,
-    Fredag,
-}
-
-pub fn serialize_day(day: i8) -> Day {
-    match day {
-        1 => Day::Måndag,
-        2 => Day::Tisdag,
-        3 => Day::Onsdag,
-        4 => Day::Torsdag,
-        5 => Day::Fredag,
-        _ => panic!("Dag är inte mellan 1 och 5"),
-    }
-}
-
-#[derive(Serialize, Deserialize, Hash, Eq, PartialEq, Debug, Clone)]
-pub struct Lesson {
-    id: String,
-    lesson_name: String,
-    teacher: Option<String>,
-    start_time: String,
-    end_time: String,
-    day: Day,
-}
-
 /// Whaaat the fuuuuuck, så fixad
-pub fn parse_lessons(lessons: Lessons) -> HashMap<Day, Vec<Lesson>> {
+pub fn parse_lessons(_lessons: Lessons) -> HashMap<Day, Vec<Lesson>> {
     // let mut sorterad = [vec![], vec![], vec![], vec![], vec![]];
-    let mut sorted: HashMap<Day, Vec<LessonInfo>> = HashMap::from_iter(
+    let mut _sorted: HashMap<Day, Vec<LessonInfo>> = HashMap::from_iter(
         [
             Day::Måndag,
             Day::Tisdag,
@@ -165,14 +141,14 @@ pub fn parse_lessons(lessons: Lessons) -> HashMap<Day, Vec<Lesson>> {
         ]
         .map(|x| (x, vec![])),
     );
-    lessons.lessons.iter().for_each(|f| {
-        sorted
-            .get_mut(&serialize_day(f.dayOfWeekNumber))
-            .unwrap()
-            .push(f.clone());
-    });
+    // lessons.lessons.iter().for_each(|f| {
+    //     sorted
+    //         .get_mut(&serialize_day(f.dayOfWeekNumber))
+    //         .unwrap()
+    //         .push(f.clone());
+    // });
 
-    let mut mer_sorterad: HashMap<Day, Vec<Lesson>> = HashMap::from_iter(
+    let mut _mer_sorterad: HashMap<Day, Vec<Lesson>> = HashMap::from_iter(
         [
             Day::Måndag,
             Day::Tisdag,
@@ -183,20 +159,20 @@ pub fn parse_lessons(lessons: Lessons) -> HashMap<Day, Vec<Lesson>> {
         .map(|x| (x, vec![])),
     );
 
-    for (day, lessons) in sorted.clone() {
-        for lesson in lessons {
-            mer_sorterad.get_mut(&day).unwrap().push(Lesson {
-                id: lesson.guidId,
-                lesson_name: lesson.texts[0].clone(),
-                start_time: lesson.timeStart,
-                end_time: lesson.timeEnd,
-                teacher: lesson.texts.get(1).cloned(),
-                day: day.clone(),
-            })
-        }
-    }
+    // for (day, lessons) in sorted.clone() {
+    //     for lesson in lessons {
+    //         mer_sorterad.get_mut(&day).unwrap().push(Lesson {
+    //             id: lesson.guidId,
+    //             lesson_name: lesson.texts[0].clone(),
+    //             start_time: lesson.timeStart,
+    //             end_time: lesson.timeEnd,
+    //             teacher: lesson.texts.get(1).cloned(),
+    //             day: day.clone(),
+    //         })
+    //     }
+    // }
 
-    mer_sorterad
+    _mer_sorterad
 }
 
 // Fin abstraktion över Self.get(&day).unwrap().clone(). Behöver inte unwrap på grund av att det är garanterat att alla nycklar från måndag till söndag finns.

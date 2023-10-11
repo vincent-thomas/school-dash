@@ -1,23 +1,28 @@
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
-use schooldash::{
-    get_lesson_info, parse_lessons,
-    schools::{Day, School},
-};
+use actix_web::{get, App, HttpResponse, HttpServer, Responder, web};
+use schooldash::schools::{Day, School};
+use schooldash::utils::serialize_day;
 
 // NTI: MzMzODU1NjAtZGYyZS1mM2U2LTgzY2MtNDA0NGFjMmZjZjUw
 // 2A: Y2MwYzVmYjktZjlkNy1mOWIzLThlN2MtMDNmNzIyNjVkNzJl
 #[get("/show_school/{school_id}")]
-async fn list_schools(school_id: String) -> impl Responder {
+async fn list_schools(_school_id: String) -> impl Responder {
+    // TODO
     let school = School::new().await; // School id måste vara satt i structen.
 
     HttpResponse::Ok().body("Hello world!")
 }
 
-#[get("/schema/{school_id}/{klass_id}")]
-async fn echo(school_id: String, klass_id: String) -> impl Responder {
-    let school = School::new().await;
+#[get("/schema/{school_id}/{klass_id}/{day}")]
+async fn echo(path: web::Path<(String, String, i8)>) -> impl Responder {
+    let (school_id, klass_id, day) = path.into_inner();
+    println!("School id: {}", school_id);
+    println!("Class id: {}", klass_id);
+    let school = School::new()
+        .await
+        .select_school(school_id)
+        .select_class_from_id(klass_id);
 
-    let result = match school.get_day_schema(klass_id, Day::Måndag).await {
+    let result = match school.get_day_schema(serialize_day(day)).await {
         Some(lessons) => lessons,
         None => {
             println!("No lessons found");
@@ -35,10 +40,13 @@ async fn echo(school_id: String, klass_id: String) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-
     let school = School::new().await;
-    
-    school.select_school("MzMzODU1NjAtZGYyZS1mM2U2LTgzY2MtNDA0NGFjMmZjZjUw").select_class_from_name("2A").await;
+
+    school
+        .select_school("MzMzODU1NjAtZGYyZS1mM2U2LTgzY2MtNDA0NGFjMmZjZjUw".to_string())
+        .select_class_from_id("Y2MwYzVmYjktZjlkNy1mOWIzLThlN2MtMDNmNzIyNjVkNzJl".to_string())
+        .get_day_schema(Day::Måndag)
+        .await;
 
     HttpServer::new(|| App::new().service(list_schools).service(echo))
         .bind(("127.0.0.1", 8080))?

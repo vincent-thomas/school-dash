@@ -1,20 +1,41 @@
+// TODO:
+// - Fix the get_day_schema function
+// - - Return data as a vector of lessons for the selected day
+// - - Use the school class id instead of the parameter.
+
 pub struct School {
     school_id: Option<String>,
     class_id: Option<String>,
 }
 // TOdo
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ResponseLesson {
+    pub guidId: String,
+    pub texts: Vec<String>,
+    pub timeStart: String,
+    pub timeEnd: String,
+    pub dayOfWeekNumber: i8,
+    pub blockName: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Lesson {
-    id: String,
-    texts: Vec<String>,
-    timeStart: String,
-    timeEnd: String,
-    dayOfWeekNumber: i8,
-    blockName: String,
+    pub id: String,
+    pub lesson_name: String,
+    pub teacher: Option<String>,
+    pub start_time: String,
+    pub end_time: String,
+    pub day: Day,
+}
+
+pub struct Lessons {
+    pub lessons: Vec<Lesson>,
 }
 
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
+
+use crate::utils::response_lesson_to_lesson;
 
 use crate::KeyResponse;
 
@@ -49,12 +70,14 @@ impl School {
             class_id: None,
         }
     }
-    pub fn select_school(mut self, school_id: impl Into<String>) -> School {
+    pub fn select_school(mut self, school_id: String) -> School {
         self.school_id = Some(school_id.into());
+        println!("School id: {}", self.school_id.clone().unwrap());
         self
     }
-    pub fn select_class_from_id(mut self, class_id: impl Into<String>) -> School {
+    pub fn select_class_from_id(mut self, class_id: String) -> School {
         self.class_id = Some(class_id.into());
+        println!("Class id: {}", self.class_id.clone().unwrap());
         self
     }
     pub async fn select_class_from_name(mut self, class_name: impl Into<String>) -> School {
@@ -84,6 +107,7 @@ impl School {
         let body: ClassesResponse = serde_json::from_str(res.as_str()).unwrap();
 
         let name = class_name.into().clone();
+
         body.data
             .classes
             .iter()
@@ -94,19 +118,15 @@ impl School {
 
         self
     }
-    pub async fn get_day_schema(
-        &self,
-        klass_id: impl Into<String>,
-        day: Day,
-    ) -> Option<Vec<Lesson>> {
+    pub async fn get_day_schema(&self, day: Day) -> Option<Vec<Lesson>> {
         let body = &serde_json::json!({
             "renderKey": Self::get_key().await,
             "host": "it-gymnasiet.skola24.se",
-            "unitGuid": self.school_id.clone().expect("No school selected"),
+            "unitGuid": self.school_id.clone().unwrap(),
             "scheduleDay": 0,
             "width": 400,
             "height": 400,
-            "selection": klass_id.into(),
+            "selection": self.class_id.clone().unwrap(),
             "week": 40,
             "year": 2023
         });
@@ -122,11 +142,23 @@ impl School {
 
         let body = res.unwrap().text().await.unwrap();
 
-        println!("{}", body);
-
         // // Jag fixade sort lessons funktionen
         let body_parsed: TimeTableResponse = serde_json::from_str(body.as_str()).unwrap();
-        body_parsed.data.lessonInfo
+
+        print!("School id: {}", self.school_id.clone().unwrap());
+        print!("Class id: {}", self.class_id.clone().unwrap());
+        println!("{}", body);
+
+        let lessons = body_parsed.data.lessonInfo.unwrap().clone();
+
+        // Turn the lessons into a vector of lessons instead of ResponseLessons
+        Some(
+            lessons
+                .into_iter()
+                .map(response_lesson_to_lesson)
+                .filter(|lesson| lesson.day == day)
+                .collect::<Vec<Lesson>>(),
+        )
     }
 }
 
@@ -139,7 +171,7 @@ enum JsonValue {
 
 #[derive(Serialize, Deserialize, Debug)]
 struct TimeTableData {
-    lessonInfo: Option<Vec<Lesson>>,
+    lessonInfo: Option<Vec<ResponseLesson>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
