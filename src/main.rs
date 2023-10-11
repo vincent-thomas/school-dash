@@ -35,6 +35,11 @@ async fn echo(school_id: String, klass_id: String) -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+
+    let school = School::new().await;
+    
+    school.select_school("MzMzODU1NjAtZGYyZS1mM2U2LTgzY2MtNDA0NGFjMmZjZjUw").select_class_from_name("2A").await;
+
     HttpServer::new(|| App::new().service(list_schools).service(echo))
         .bind(("127.0.0.1", 8080))?
         .run()

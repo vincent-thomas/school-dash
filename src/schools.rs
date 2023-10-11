@@ -1,5 +1,6 @@
 pub struct School {
     school_id: Option<String>,
+    class_id: Option<String>,
 }
 // TOdo
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -11,8 +12,6 @@ pub struct Lesson {
     dayOfWeekNumber: i8,
     blockName: String,
 }
-
-use std::collections::HashMap;
 
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
@@ -45,10 +44,54 @@ impl School {
         body_parsed.data.key
     }
     pub async fn new() -> Self {
-        Self { school_id: None }
+        Self {
+            school_id: None,
+            class_id: None,
+        }
     }
     pub fn select_school(mut self, school_id: impl Into<String>) -> School {
         self.school_id = Some(school_id.into());
+        self
+    }
+    pub fn select_class_from_id(mut self, class_id: impl Into<String>) -> School {
+        self.class_id = Some(class_id.into());
+        self
+    }
+    pub async fn select_class_from_name(mut self, class_name: impl Into<String>) -> School {
+        // Get all classes from https://web.skola24.se/api/get/selection
+
+        let client = Client::new();
+
+        let body = serde_json::json!({
+            "hostName": "it-gymnasiet.skola24.se",
+            "unitGuid": self.school_id,
+            "filters": {
+                "class": true
+            }
+        });
+
+        let res = client
+            .post(SKOLA24_BASE_URL.to_string() + "/get/timetable/selection")
+            .header("X-Scope", SKOLA24_KEY)
+            .json(&body)
+            .send()
+            .await
+            .unwrap()
+            .text()
+            .await
+            .unwrap();
+
+        let body: ClassesResponse = serde_json::from_str(res.as_str()).unwrap();
+
+        let name = class_name.into().clone();
+        body.data
+            .classes
+            .iter()
+            .filter(|class| class.groupName == name)
+            .for_each(|class| {
+                self.class_id = Some(class.groupGuid.clone());
+            });
+
         self
     }
     pub async fn get_day_schema(
@@ -56,30 +99,24 @@ impl School {
         klass_id: impl Into<String>,
         day: Day,
     ) -> Option<Vec<Lesson>> {
-        let mut body_to_send = HashMap::new();
-
-        body_to_send.insert("renderKey", JsonValue::Text(Self::get_key().await));
-        body_to_send.insert(
-            "host",
-            JsonValue::Text("it-gymnasiet.skola24.se".to_string()),
-        );
-        body_to_send.insert(
-            "unitGuid",
-            JsonValue::Text(self.school_id.clone().expect("No school selected")),
-        );
-        body_to_send.insert("scheduleDay", JsonValue::Nummer(0));
-        body_to_send.insert("width", JsonValue::Nummer(400));
-        body_to_send.insert("height", JsonValue::Nummer(400));
-        body_to_send.insert("selection", JsonValue::Text(klass_id.into()));
-        body_to_send.insert("week", JsonValue::Nummer(40));
-        body_to_send.insert("year", JsonValue::Nummer(2023));
+        let body = &serde_json::json!({
+            "renderKey": Self::get_key().await,
+            "host": "it-gymnasiet.skola24.se",
+            "unitGuid": self.school_id.clone().expect("No school selected"),
+            "scheduleDay": 0,
+            "width": 400,
+            "height": 400,
+            "selection": klass_id.into(),
+            "week": 40,
+            "year": 2023
+        });
 
         let client = Client::new();
         let res = client
             .post(SKOLA24_BASE_URL.to_string() + "/render/timetable")
             .header("X-Scope", SKOLA24_KEY)
             .header("Content-Type", "application/json")
-            .body(serde_json::to_string(&body_to_send).unwrap())
+            .body(serde_json::to_string(body).unwrap())
             .send()
             .await;
 
@@ -109,4 +146,21 @@ struct TimeTableData {
 struct TimeTableResponse {
     data: TimeTableData,
     error: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct ClassesResponse {
+    data: ClassesData,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct ClassesData {
+    classes: Vec<Class>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct Class {
+    groupGuid: String,
+    groupName: String,
+    isClass: bool,
 }
