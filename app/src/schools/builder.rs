@@ -1,11 +1,9 @@
 use reqwest::Client;
+use skola24_http::{SKOLA24_BASE_URL, SKOLA24_KEY};
 
 use crate::json_parse::ClassesResponse;
 
 use super::{ClassId, NoClass, NoSchool, School, SchoolId};
-
-const SKOLA24_KEY: &str = "8a22163c-8662-4535-9050-bc5e1923df48";
-const SKOLA24_BASE_URL: &str = "https://web.skola24.se/api";
 
 impl School<NoSchool, NoClass> {
     pub fn select_school(&self, school_id: &str) -> School<SchoolId, NoClass> {
@@ -50,7 +48,7 @@ impl School<SchoolId, NoClass> {
 
         let body: ClassesResponse = serde_json::from_str(res.as_str()).unwrap();
 
-        let mut to_return = "".to_string();
+        let mut to_return = String::new();
 
         body.data
             .classes

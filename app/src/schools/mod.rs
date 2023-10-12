@@ -1,6 +1,5 @@
 use reqwest::Client;
 
-use crate::KeyResponse;
 use serde::{Deserialize, Serialize};
 
 mod builder;
@@ -40,23 +39,4 @@ pub enum Day {
     Onsdag,
     Torsdag,
     Fredag,
-}
-
-const SKOLA24_KEY: &str = "8a22163c-8662-4535-9050-bc5e1923df48";
-const SKOLA24_BASE_URL: &str = "https://web.skola24.se/api";
-
-impl<T, U> School<T, U> {
-    async fn get_key() -> String {
-        let client: Client = Client::new();
-        let res = client
-            .get(SKOLA24_BASE_URL.to_string() + "/get/timetable/render/key")
-            .header("X-Scope", SKOLA24_KEY)
-            .send()
-            .await;
-
-        let body = res.unwrap().text().await.unwrap();
-        let body_parsed: KeyResponse = serde_json::from_str(body.as_str()).expect("Har ingen key");
-
-        body_parsed.data.key
-    }
 }

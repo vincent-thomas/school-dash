@@ -1,19 +1,18 @@
 use reqwest::Client;
+use skola24_http::{SKOLA24_BASE_URL, SKOLA24_KEY};
 
 use crate::LessonInfo;
 use crate::TimeTableResponse;
 
 use super::ClassId;
 use super::School;
-use super::SKOLA24_BASE_URL;
-use super::SKOLA24_KEY;
 
 use super::SchoolId;
 
 impl School<SchoolId, ClassId> {
     pub async fn get_schema(self) -> Option<Vec<LessonInfo>> {
         let body = &serde_json::json!({
-            "renderKey": Self::get_key().await,
+            "renderKey": skola24_http::key::get_key().await,
             "host": "it-gymnasiet.skola24.se",
             "unitGuid": self.school_id.0,
             "scheduleDay": 0,

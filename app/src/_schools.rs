@@ -36,29 +36,15 @@ pub struct Lessons {
 
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
+use skola24_http::key::get_key;
 
 use crate::schools::Day;
 use crate::utils::response_lesson_to_lesson;
-
-use crate::KeyResponse;
 
 const SKOLA24_KEY: &str = "8a22163c-8662-4535-9050-bc5e1923df48";
 const SKOLA24_BASE_URL: &str = "https://web.skola24.se/api";
 
 impl School {
-    async fn get_key() -> String {
-        let client: Client = Client::new();
-        let res = client
-            .get(SKOLA24_BASE_URL.to_string() + "/get/timetable/render/key")
-            .header("X-Scope", SKOLA24_KEY)
-            .send()
-            .await;
-
-        let body = res.unwrap().text().await.unwrap();
-
-        let body_parsed: KeyResponse = serde_json::from_str(body.as_str()).expect("Har ingen key");
-        body_parsed.data.key
-    }
     pub async fn new() -> Self {
         Self {
             school_id: None,
@@ -66,12 +52,12 @@ impl School {
         }
     }
     pub fn select_school(mut self, school_id: String) -> School {
-        self.school_id = Some(school_id.into());
+        self.school_id = Some(school_id);
         println!("School id: {}", self.school_id.clone().unwrap());
         self
     }
     pub fn select_class_from_id(mut self, class_id: String) -> School {
-        self.class_id = Some(class_id.into());
+        self.class_id = Some(class_id);
         println!("Class id: {}", self.class_id.clone().unwrap());
         self
     }
@@ -115,7 +101,7 @@ impl School {
     }
     pub async fn get_day_schema(&self, day: Day) -> Option<Vec<Lesson>> {
         let body = &serde_json::json!({
-            "renderKey": Self::get_key().await,
+            "renderKey": get_key().await,
             "host": "it-gymnasiet.skola24.se",
             "unitGuid": self.school_id.clone().unwrap(),
             "scheduleDay": 0,

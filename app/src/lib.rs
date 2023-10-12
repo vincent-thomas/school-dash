@@ -14,15 +14,6 @@ pub mod _schools;
 pub mod schools;
 pub mod utils;
 
-#[derive(Serialize, Deserialize, Debug)]
-struct KeyData {
-    key: String,
-}
-#[derive(Serialize, Deserialize, Debug)]
-struct KeyResponse {
-    data: KeyData,
-}
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct LessonInfo {
     guidId: String,

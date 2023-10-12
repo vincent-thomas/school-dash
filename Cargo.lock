@@ -1203,6 +1203,7 @@ dependencies = [
  "reqwest",
  "serde",
  "serde_json",
+ "skola24_http",
  "tokio",
 ]
 
@@ -1302,6 +1303,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d8229b473baa5980ac72ef434c4415e70c4b5e71b423043adb4ba059f89c99a1"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "skola24_http"
+version = "0.1.0"
+dependencies = [
+ "reqwest",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
