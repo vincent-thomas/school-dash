@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-
+// BORT SÅ FORT SOM MÖJLIGT
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ClassesResponse {
     pub data: ClassesData,
