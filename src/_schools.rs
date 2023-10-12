@@ -3,6 +3,8 @@
 // - - Return data as a vector of lessons for the selected day
 // - - Use the school class id instead of the parameter.
 
+// HELA DENNA FILENS LOGIK SKA BORT. DEN ÄR GAMMAL MEN FUNKTIONELL
+
 pub struct School {
     school_id: Option<String>,
     class_id: Option<String>,
@@ -35,18 +37,11 @@ pub struct Lessons {
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
+use crate::schools::Day;
 use crate::utils::response_lesson_to_lesson;
 
 use crate::KeyResponse;
 
-#[derive(Serialize, Deserialize, Hash, Eq, PartialEq, Debug, Clone)]
-pub enum Day {
-    Måndag,
-    Tisdag,
-    Onsdag,
-    Torsdag,
-    Fredag,
-}
 const SKOLA24_KEY: &str = "8a22163c-8662-4535-9050-bc5e1923df48";
 const SKOLA24_BASE_URL: &str = "https://web.skola24.se/api";
 
@@ -156,7 +151,8 @@ impl School {
             lessons
                 .into_iter()
                 .map(response_lesson_to_lesson)
-                .filter(|lesson| lesson.day == day)
+                // Någon error jag inte vet vad de är
+                // .filter(|lesson| lesson.day == day)
                 .collect::<Vec<Lesson>>(),
         )
     }

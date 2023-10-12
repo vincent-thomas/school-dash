@@ -1,8 +1,10 @@
-use crate::schools::{Day, Lesson, ResponseLesson};
+use crate::{
+    _schools::{Lesson, ResponseLesson},
+    schools::Day,
+};
 
 /// Hjälpfunktioner för att göra om från en ResponseLesson till en Lesson
 pub fn response_lesson_to_lesson(response_lesson: ResponseLesson) -> Lesson {
-    
     Lesson {
         id: response_lesson.guidId,
         lesson_name: response_lesson.texts[0].clone(),

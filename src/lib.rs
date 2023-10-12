@@ -1,17 +1,18 @@
 #![allow(non_snake_case)]
 
-
 use std::collections::HashMap;
 use std::fmt;
 
+use _schools::Lesson;
 use reqwest::Client;
+use schools::Day;
 use serde::{Deserialize, Serialize};
 
+mod json_parse;
 
+pub mod _schools;
 pub mod schools;
 pub mod utils;
-
-use schools::{Day, Lesson, ResponseLesson};
 
 #[derive(Serialize, Deserialize, Debug)]
 struct KeyData {
@@ -72,22 +73,6 @@ enum JsonValue {
     Nummer(i32),
 }
 
-// pub async fn get_key() -> String {
-//     todo!()
-// let client: Client = Client::new();
-// let res = client
-//     .get(SKOLA24_BASE_URL.to_string() + "/get/timetable/render/key")
-//     .header("X-Scope", SKOLA24_KEY)
-//     .send()
-//     .await;
-
-// let body = res.unwrap().text().await.unwrap();
-
-// let body_parsed: KeyResponse = serde_json::from_str(body.as_str()).expect("Har ingen key");
-
-// body_parsed.data.key
-// }
-
 pub async fn get_lesson_info(_client: Client, key: String) -> Lessons {
     let mut body_to_send = HashMap::new();
 
@@ -110,22 +95,6 @@ pub async fn get_lesson_info(_client: Client, key: String) -> Lessons {
     body_to_send.insert("week", JsonValue::Nummer(40));
     body_to_send.insert("year", JsonValue::Nummer(2023));
     todo!();
-    // let res = client
-    //     .post(SKOLA24_BASE_URL.to_string() + "/render/timetable")
-    //     .header("X-Scope", SKOLA24_KEY)
-    //     .header("Content-Type", "application/json")
-    //     .body(serde_json::to_string(&body_to_send).unwrap())
-    //     .send()
-    //     .await;
-
-    // let body = res.unwrap().text().await.unwrap();
-
-    // // Jag fixade sort lessons funktionen
-    // let body_parsed: TimeTableResponse = serde_json::from_str(body.as_str()).unwrap();
-
-    // Lessons {
-    //     lessons: body_parsed.data.lessonInfo.unwrap(),
-    // }
 }
 
 /// Whaaat the fuuuuuck, så fixad
