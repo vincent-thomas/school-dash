@@ -8,8 +8,6 @@ use reqwest::Client;
 use schools::Day;
 use serde::{Deserialize, Serialize};
 
-mod json_parse;
-
 pub mod _schools;
 pub mod schools;
 pub mod utils;
