@@ -1,24 +1,22 @@
-use serde::{Deserialize, Serialize};
-
 mod builder;
 mod schema;
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Debug)]
 pub struct School<SchoolIdPlaceholder, ClassIdPlaceholder> {
     pub school_id: SchoolIdPlaceholder,
     pub class_id: ClassIdPlaceholder,
 }
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Debug)]
 pub struct NoSchool;
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Debug)]
 pub struct SchoolId(pub String);
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Debug)]
 pub struct NoClass;
 
-#[derive(Clone, Serialize, Deserialize, Debug)]
+#[derive(Clone, Debug)]
 pub struct ClassId(pub String);
 
 impl Default for School<NoSchool, NoClass> {
@@ -28,13 +26,4 @@ impl Default for School<NoSchool, NoClass> {
             class_id: NoClass,
         }
     }
-}
-
-#[derive(Serialize, Deserialize, Hash, Eq, PartialEq, Debug, Clone)]
-pub enum Day {
-    Måndag,
-    Tisdag,
-    Onsdag,
-    Torsdag,
-    Fredag,
 }

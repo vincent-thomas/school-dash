@@ -20,7 +20,7 @@ pub struct ResponseLesson {
     pub blockName: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct Lesson {
     pub id: String,
     pub lesson_name: String,
