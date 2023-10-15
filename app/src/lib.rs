@@ -5,12 +5,12 @@ use std::fmt;
 
 use _schools::Lesson;
 use reqwest::Client;
-use schools::Day;
 use serde::{Deserialize, Serialize};
+
+use skola24_http::Day;
 
 pub mod _schools;
 pub mod schools;
-pub mod utils;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct LessonInfo {

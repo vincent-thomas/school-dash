@@ -5,6 +5,8 @@
 
 // HELA DENNA FILENS LOGIK SKA BORT. DEN ÄR GAMMAL MEN FUNKTIONELL
 
+use skola24_http::Day;
+
 pub struct School {
     school_id: Option<String>,
     class_id: Option<String>,
@@ -37,9 +39,6 @@ pub struct Lessons {
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use skola24_http::key::get_key;
-
-use crate::schools::Day;
-use crate::utils::response_lesson_to_lesson;
 
 const SKOLA24_KEY: &str = "8a22163c-8662-4535-9050-bc5e1923df48";
 const SKOLA24_BASE_URL: &str = "https://web.skola24.se/api";
@@ -99,7 +98,7 @@ impl School {
 
         self
     }
-    pub async fn get_day_schema(&self, day: Day) -> Option<Vec<Lesson>> {
+    pub async fn get_day_schema(&self, _day: Day) -> Option<Vec<Lesson>> {
         let body = &serde_json::json!({
             "renderKey": get_key().await,
             "host": "it-gymnasiet.skola24.se",
@@ -130,17 +129,21 @@ impl School {
         print!("Class id: {}", self.class_id.clone().unwrap());
         println!("{}", body);
 
-        let lessons = body_parsed.data.lessonInfo.unwrap().clone();
+        let _lessons = body_parsed.data.lessonInfo.unwrap().clone();
 
         // Turn the lessons into a vector of lessons instead of ResponseLessons
-        Some(
-            lessons
-                .into_iter()
-                .map(response_lesson_to_lesson)
-                // Någon error jag inte vet vad de är
-                // .filter(|lesson| lesson.day == day)
-                .collect::<Vec<Lesson>>(),
-        )
+
+        // Bästa error-fixen
+        return None;
+
+        // Some(
+        //     lessons
+        //         .into_iter()
+        //         // .map(response_lesson_to_lesson)
+        //         // Någon error jag inte vet vad de är
+        //         // .filter(|lesson| lesson.day == day)
+        //         .collect::<Vec<Lesson>>(),
+        // )
     }
 }
 
